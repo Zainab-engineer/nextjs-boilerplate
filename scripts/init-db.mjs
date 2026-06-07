@@ -1,0 +1,17 @@
+import { neon } from '@neondatabase/serverless';
+
+const sql = neon(process.env.DATABASE_URL);
+
+await sql`
+  CREATE TABLE IF NOT EXISTS tasks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    pomodoro_count INTEGER NOT NULL DEFAULT 0,
+    est INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )
+`;
+
+console.log('Table "tasks" created.');
+process.exit(0);
